@@ -4,20 +4,23 @@ from .models import Pizzeria
 
 class PizzeriaListSerializer(serializers.ModelSerializer):
     absolute_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Pizzeria
         fields = [
             'id',
-            'logo_image',
             'pizzeria_name',
             'city',
             'zip_code',
             'absolute_url'
         ]
+
     def get_absolute_url(self, obj):
-        return reverse('pizzeria_detail', args=(obj.pk))
+        return reverse('pizzeria_detail', args=(obj.pk,))  # ebanaya ',' ne zabud'  name args kwargs obj cyka 
 
 class PizzeriaDetailSerializer(serializers.ModelSerializer):
+    update = serializers.SerializerMethodField()
+
     class Meta:
         model = Pizzeria
         fields = [
@@ -32,5 +35,9 @@ class PizzeriaDetailSerializer(serializers.ModelSerializer):
             'description',
             'logo_image',
             'email',
-            'active'
+            'active',
+            'update',
         ]
+
+    def get_update(self, obj):
+        return reverse('pizzeria_update', args=(obj.pk,))

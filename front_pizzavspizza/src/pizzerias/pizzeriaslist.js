@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PizzaDetail from './pizzeriadetail';
+import PizzaForm from './pizzeriaform';
 import axios from 'axios'
 
 
@@ -33,7 +34,7 @@ class Pizzalist extends Component{
     }
 
     componentDidMount(){
-        axios.get("http://127.0.0.1:8000")
+        axios.get("http://127.0.0.1:8000/")
         .then((response) => {
             this.setState({pizzeriasData: response.data})
         })
@@ -42,15 +43,18 @@ class Pizzalist extends Component{
         })
     }
 
-
+    
+    
     render(){
         return(
+
             <div>
+            <PizzaForm/>
                 {this.state.pizzeriasData.map ((item) => {
                     return (
                         <h3 key={item.id} onClick={() => this.showPizzeriaDetails(item)}>
                             {item.pizzeria_name}, {item.city}
-                        </h3>   
+                        </h3>
                     );
                 })}
 
