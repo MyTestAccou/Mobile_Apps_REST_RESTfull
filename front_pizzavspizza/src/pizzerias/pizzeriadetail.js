@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PizzaUpdate from './pizzeriaupdate';
+import axios from 'axios';
 
 
 class PizzaDetail extends Component {
@@ -9,10 +10,24 @@ class PizzaDetail extends Component {
             showComponent: false,
         };
         this.updatePizzeriaDetails = this.updatePizzeriaDetails.bind(this);
+        this.deletePizzeria = this.deletePizzeria.bind(this);
     }
     updatePizzeriaDetails() {
         this.setState({ showComponent: true });
     }
+
+    deletePizzeria(obj) {
+        console.log(obj);
+        axios.delete(process.env.REACT_APP_URL.concat(obj))
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+    }
+
+
     render() {
     const obj = this.props.pizzariaDetail;
         return(
@@ -28,6 +43,12 @@ class PizzaDetail extends Component {
                     onClick={()=> this.updatePizzeriaDetails()}
                 >
                     Update 
+                </button>
+                <button 
+                    style={{ backgroundColor: "red" }}
+                    onClick={()=> this.deletePizzeria(obj.delete)}
+                >
+                    Delete
                 </button>
                 {this.state.showComponent ? <PizzaUpdate pizzariaUpdate={obj} /> :null}
             </div>
